@@ -4,7 +4,6 @@
 
 #include "config.h"
 #include "sensors/mpu6050.h"
-#include "sensors/ds3231.h"
 #include "sensors/max31865_pt100.h"
 #include "sensors/rm3100.h"
 #include "pi/pi_detector.h"
