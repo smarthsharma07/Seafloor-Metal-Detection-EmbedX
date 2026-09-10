@@ -121,21 +121,6 @@ MoES_Sensor_Project_Proposal_V2/
 └── submission/                       # Presentation and demo links
 ```
 
-### What goes where?
-
-| Item | Location |
-| --- | --- |
-| ESP32 firmware | `src/` |
-| Desktop dashboard | `desktop_software/` |
-| Architecture, requirements, calibration, and test documents | `docs/` |
-| Firmware mathematical tests | `test/` |
-| Dashboard screenshots and prototype photographs | `assets/screenshots/` |
-| Circuit schematics, wiring, and PCB references | `assets/circuit_schematics/` |
-| Vessel schematics, mechanical drawings, and CAD files | `assets/vessel_schematics_cad/` |
-| Final presentation | `submission/` |
-| Demo video link | `submission/DEMO.md` |
-| Project overview | `README.md` |
-
 ## Installation
 
 Clone the repository and install the desktop dependencies:
@@ -168,8 +153,6 @@ $env:PYTHONPATH = (Get-Location).Path
 python -m uvicorn main:app --host 127.0.0.1 --port 8000
 ```
 
-Use **Run DEMO (synthetic)** for a complete local walkthrough, or upload compatible CSV/JSON telemetry through the dashboard. Synthetic records are marked `DEMO` in the resulting exports.
-
 ## Firmware Build and Test
 
 ```bash
@@ -180,37 +163,20 @@ python test/test_prototype_corrections.py
 
 The firmware must be bench-tested with the actual sensor wiring before field deployment. Hardware assumptions and unresolved items are recorded in [docs/ASSUMPTIONS.md](docs/ASSUMPTIONS.md) and [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md).
 
-## Documentation and Submission Files
-
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md): firmware architecture and module map
-- [docs/DATA_FORMAT.md](docs/DATA_FORMAT.md): telemetry and data contracts
-- [docs/SENSOR_FUSION.md](docs/SENSOR_FUSION.md): heading, motion, and drift handling
-- [docs/TEST_PLAN.md](docs/TEST_PLAN.md): verification plan
-- [assets/screenshots/README.md](assets/screenshots/README.md): screenshot naming guidance
-- [assets/circuit_schematics/README.md](assets/circuit_schematics/README.md): circuit asset guidance
-- [assets/vessel_schematics_cad/README.md](assets/vessel_schematics_cad/README.md): vessel/CAD asset guidance
-- [submission/PRESENTATION.md](submission/PRESENTATION.md): presentation placeholder
-- [submission/DEMO.md](submission/DEMO.md): demo video/link placeholder
-- [desktop_software/data/demo/synthetic_possible_anomaly_points_20.csv](desktop_software/data/demo/synthetic_possible_anomaly_points_20.csv): 20-row synthetic survey-track dataset
-
 ## Future Scope
 
 - Validate the package with controlled tank, coastal, and vessel trials.
 - Replace provisional sensor parameters with calibrated field measurements.
 - Add authenticated and encrypted recovery communications for operational deployments.
 - Add GIS project packaging and richer survey-line planning after the prototype workflow is stable.
-- Evaluate advanced statistical or machine-learning methods only when a representative labelled dataset is available; they are outside the current prototype scope.
-
-## Security and Data Handling
-
-Do not commit passwords, API keys, access tokens, private telemetry, `.env` files containing secrets, or sensitive vessel/security information. Keep raw data in its own input area and use the dashboard export bundle for derived results. Review CAD and schematic files for restricted information before publishing the repository.
 
 ## Team Additions Before Submission
 
-Add the final team, institute, mentor, repository URL, presentation, demo link, screenshots, circuit schematics, vessel CAD, and field-validation evidence to the marked folders before submitting the GitHub link.
-
-## Sample Dataset
-
-The repository includes a 20-row synthetic survey-track CSV at [desktop_software/data/demo/synthetic_possible_anomaly_points_20.csv](desktop_software/data/demo/synthetic_possible_anomaly_points_20.csv). It contains DEMO-only measurements with a central elevated magnetic/PI/temperature response and surrounding lower-signal points.
-
-To test it, start the dashboard, enter a station ID such as `DEMO_ORE_TRACK`, set the deployment location near `14.98000, 74.01000`, keep the depth at `250 m` and drift scale at `400 m`, select the CSV, and choose **Upload & Process**. The file is synthetic and represents possible anomaly evidence for software testing; it does not represent confirmed ore or a real field measurement.
+| Member | Role & Contribution |
+|---|---|
+| **Satwik Pavan** | **Team Leader & Circuit Design** — Designed, built, and prototyped the sensor circuit and hardware integration. |
+| **Smarth Sharma** | **Firmware & Software** — Developed firmware, MCU programming, sensor interfacing, and software/data-processing components. |
+| **Shahzeb Shahzad** | **CAD & Mechanical Design** — Designed CAD models and schematics for the payload carrier/lander and sensor payload. |
+| **Piyush Goyal** | **Pulse Induction Research** — Researched pulse-induction sensing and contributed to PI coil development. |
+| **Ayaan Chauhan** | **PI Coil & MCU Programming** — Worked on pulse-induction coil design and MCU programming. |
+| **Shreya Jha** | **Ore Research & Presentation** — Researched relevant seafloor ore properties and developed the project presentation. |
