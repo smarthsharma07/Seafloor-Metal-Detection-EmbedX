@@ -174,9 +174,9 @@ The firmware must be bench-tested with the actual sensor wiring before field dep
 
 | Member | Role & Contribution |
 |---|---|
-| **Satwik Pavan** | **Team Leader & Circuit Design** — Designed, built, and prototyped the sensor circuit and hardware integration. |
-| **Shahzeb Shahzad** | **CAD & Mechanical Design** — Designed CAD models and schematics for the payload carrier/lander and sensor payload. |
-| **Smarth Sharma** | **Firmware & Software** — Developed firmware, MCU programming, sensor interfacing, and software/data-processing components. |
-| **Piyush Goyal** | **Pulse Induction Research** — Researched pulse-induction sensing and contributed to PI coil development. |
-| **Ayaan Chauhan** | **PI Coil & MCU Programming** — Worked on pulse-induction coil design and MCU programming. |
-| **Shreya Jha** | **Ore Research & Presentation** — Researched relevant seafloor ore properties and developed the project presentation. |
+| **Satwik Pavan** | **Team Leader & Circuit Design** : Led the team and designed, built, and prototyped the sensor circuit and hardware integration. |
+| **Shahzeb Shahzad** | **CAD & Mechanical Design** : Led the Designing of CAD models and schematics for the payload carrier/lander and sensor payload. |
+| **Smarth Sharma** | **Firmware & Software** : Led the firmware and software development, including MCU programming, sensor interfacing, and data-processing components. |
+| **Piyush Goyal** | **Pulse Induction Research** : Researched pulse-induction sensing and contributed to PI coil development. |
+| **Ayaan Chauhan** | **PI Coil & MCU Programming** : Worked on pulse-induction coil design and MCU programming. |
+| **Shreya Jha** | **Ore Research & Presentation** : Researched relevant seafloor ore properties and developed the project presentation. |
