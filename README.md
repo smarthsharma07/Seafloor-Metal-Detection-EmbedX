@@ -91,7 +91,7 @@ Detailed firmware architecture is documented in [docs/ARCHITECTURE.md](docs/ARCH
 ## Repository Structure
 
 ```text
-MoES_Sensor_Project_Proposal_V2/
+Seafloor-Metal-Detection-EmbedX/
 ├── README.md
 ├── platformio.ini
 ├── src/                              # ESP32 firmware
