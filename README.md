@@ -7,8 +7,8 @@ SIH 2026 prototype for a low-cost, deployable ocean-bottom sensor package and de
 - **Project Title:** Low-Cost Deployable Seafloor Metal Detection Sensor for Ocean Resource Exploration
 - **PS ID:** 26064
 - **PS Title:** Ministry of Earth Sciences / NCPOR seafloor metal-detection and ocean resource exploration problem
-- **Category:** Software and Hardware Prototype
-- **Theme:** Ocean Technology, Seafloor Exploration, and Marine Instrumentation
+- **Category:** Hardware
+- **Theme:** Robotics and Drones
 - **Prototype Status:** Bench bring-up and simulation verified; hardware validation remains deployment-dependent
 
 ## Problem Statement
