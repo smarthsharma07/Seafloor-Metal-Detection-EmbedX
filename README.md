@@ -1,4 +1,4 @@
-# MoES Deployable Underwater Seafloor Metal-Detection Sensor Package
+# EmbedX - Seafloor Metal Detection & Target Prioritization
 
 SIH 2026 prototype for a low-cost, deployable ocean-bottom sensor package and desktop analysis dashboard for identifying and localizing possible geophysical anomalies.
 
