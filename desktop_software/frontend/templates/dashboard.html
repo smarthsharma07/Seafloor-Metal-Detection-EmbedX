@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MoES Underwater Sensor System — SIH 2026</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <link rel="stylesheet" href="/static/css/dashboard.css"/>
+</head>
+<body>
+
+<div id="app">
+  <!-- ── Header ─────────────────────────────────────────────── -->
+  <header>
+    <div class="header-left">
+      <h1>MoES Seafloor Sensor Analysis</h1>
+      <span class="badge-sih">SIH 2026 Prototype</span>
+    </div>
+    <div class="header-right">
+      <span id="status-dot" class="dot dot-gray"></span>
+      <span id="status-label">Connecting…</span>
+    </div>
+  </header>
+
+  <!-- ── Disclaimer banner ───────────────────────────────────── -->
+  <div class="disclaimer-bar">
+    <strong>Evidence / Confidence Score:</strong> Rule-based, not statistically calibrated. &nbsp;|&nbsp;
+    Classification labels indicate anomaly type only — no exact mineral identification is claimed. &nbsp;|&nbsp;
+    Heatmap shows <em>interpolated anomaly intensity</em> — not direct measurements.
+  </div>
+
+  <!-- ── Main layout ─────────────────────────────────────────── -->
+  <div id="main-layout">
+
+    <!-- Left panel -->
+    <aside id="left-panel">
+
+      <!-- Upload section -->
+      <section class="panel-section">
+        <h2>📂 Load Data</h2>
+        <div class="form-group">
+          <label>Station ID</label>
+          <input type="text" id="inp-station-id" placeholder="STATION_A" value="STATION_A"/>
+        </div>
+        <div class="form-group">
+          <label>Latitude</label>
+          <input type="number" id="inp-lat" placeholder="14.98" step="0.0001" value="14.9800"/>
+        </div>
+        <div class="form-group">
+          <label>Longitude</label>
+          <input type="number" id="inp-lon" placeholder="74.01" step="0.0001" value="74.0100"/>
+        </div>
+        <div class="form-group">
+          <label>Depth (m)</label>
+          <input type="number" id="inp-depth" placeholder="250" value="250"/>
+        </div>
+        <div class="form-group">
+          <label>Drift Scale (m) <small>[uncertainty extent]</small></label>
+          <input type="number" id="inp-drift" placeholder="400" value="400"/>
+        </div>
+        <div class="form-group">
+          <label>Telemetry File (CSV / JSON)</label>
+          <input type="file" id="inp-file" accept=".csv,.json"/>
+        </div>
+        <button id="btn-upload" class="btn btn-primary">⬆ Upload & Process</button>
+        <hr/>
+        <button id="btn-demo" class="btn btn-secondary">🎲 Run DEMO (synthetic)</button>
+        <p class="note">DEMO data is entirely synthetic and tagged accordingly.</p>
+      </section>
+
+      <!-- Station list -->
+      <section class="panel-section">
+        <h2>📍 Stations</h2>
+        <div id="station-list">
+          <p class="muted">No data loaded.</p>
+        </div>
+      </section>
+
+      <!-- Config -->
+      <section class="panel-section">
+        <h2>⚙️ Detection Thresholds</h2>
+        <div id="threshold-form"></div>
+        <button id="btn-save-config" class="btn btn-outline">💾 Save Thresholds</button>
+      </section>
+
+    </aside>
+
+    <!-- Centre: Map -->
+    <main id="map-area">
+      <div id="map-container">
+        <div id="map"></div>
+        <div id="map-legend">
+          <div class="legend-title">Map Layers</div>
+          <div><span class="legend-dot" style="background:#2563eb"></span> Deployment locations</div>
+          <div><span class="legend-dot" style="background:#dc2626"></span> Measured anomaly points</div>
+          <div><span class="legend-poly" style="background:rgba(250,204,21,0.4);border:2px solid #ca8a04"></span> Drift uncertainty sectors</div>
+          <div><span class="legend-dot" style="background:#7c3aed"></span> Candidate overlap regions</div>
+          <div style="margin-top:4px;font-size:11px;color:#6b7280;">Interpolated anomaly intensity = IDW estimate</div>
+        </div>
+      </div>
+
+      <!-- Layer toggles -->
+      <div id="layer-toggles">
+        <label><input type="checkbox" id="tog-deploy" checked> Deployment locations</label>
+        <label><input type="checkbox" id="tog-anomaly" checked> Measured anomaly points</label>
+        <label><input type="checkbox" id="tog-sectors" checked> Drift uncertainty sectors</label>
+        <label><input type="checkbox" id="tog-heatmap" checked> Interpolated heatmap</label>
+        <label><input type="checkbox" id="tog-candidates" checked> Candidate overlap regions</label>
+      </div>
+    </main>
+
+    <!-- Right panel: Inspector -->
+    <aside id="right-panel">
+      <section class="panel-section">
+        <h2>🔬 Station Inspector</h2>
+        <select id="sel-station">
+          <option value="">— select station —</option>
+        </select>
+        <div id="classification-card" class="classification-card hidden">
+          <div id="class-type" class="class-type"></div>
+          <div id="class-score-label" class="class-score-label">Evidence / Confidence Score</div>
+          <div id="class-score" class="class-score"></div>
+          <div id="class-disclaimer" class="class-disclaimer">Evidence / Confidence Score: Rule-based, not statistically calibrated.</div>
+          <div id="class-channels" class="class-channels"></div>
+          <div id="class-rationale" class="class-rationale"></div>
+          <div id="class-provenance" class="class-provenance"></div>
+        </div>
+      </section>
+
+      <!-- Sensor time-series chart -->
+      <section class="panel-section">
+        <h2>📈 Sensor Time-Series</h2>
+        <select id="sel-channel">
+          <option value="pi_anomaly_strength">PI Anomaly Strength</option>
+          <option value="mag_total_ut">Magnetic Total (µT)</option>
+          <option value="water_temp_c">Water Temp (°C)</option>
+          <option value="heading_deg">Heading (°)</option>
+          <option value="deployment_drift_radius_m">Drift Radius (m)</option>
+          <option value="imu_die_temp_c">IMU Die Temp (°C)</option>
+        </select>
+        <div id="chart-ts" style="height:220px;"></div>
+      </section>
+
+      <!-- Candidates list -->
+      <section class="panel-section">
+        <h2>🎯 Multi-Station Candidates</h2>
+        <div id="candidate-list">
+          <p class="muted">No candidates yet.</p>
+        </div>
+      </section>
+
+      <!-- Export -->
+      <section class="panel-section">
+        <h2>📤 Export</h2>
+        <button id="btn-export-geojson" class="btn btn-outline">⬇ GeoJSON</button>
+        <button id="btn-export-json"    class="btn btn-outline">⬇ Full JSON</button>
+      </section>
+    </aside>
+
+  </div><!-- /#main-layout -->
+</div><!-- /#app -->
+
+<!-- Scripts -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+<script src="/static/js/dashboard.js"></script>
+</body>
+</html>
