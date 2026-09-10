@@ -1,5 +1,5 @@
-# Screenshots and Prototype Photos
+# EmbedX Software Screenshots
 
-Add dashboard screenshots, firmware serial output, sensor-package photographs, and bench or vessel test images here.
+Screenshots demonstrating the current software prototype.
 
-Use descriptive names such as `dashboard-demo.png`, `firmware-serial-self-test.png`, or `sensor-package-bench-test.jpg`. Do not include secrets, private coordinates, or restricted vessel information.
+- `analysis-dashboard-synthetic.png` — Synthetic-data analysis dashboard, anomalies , drift visualization and mappings.
